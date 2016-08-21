@@ -30,6 +30,11 @@ pkgver() {
 	printf "r%s.%s" "$(git rev-list --count HEAD)" "$(git rev-parse --short HEAD)"
 }
 
+prepare() {
+    cd "$srcdir/${pkgname%-git}"
+    sed -i 's/isnan/std::isnan/g' libsrc/leddevice/LedDevicePhilipsHue.cpp
+}
+
 build() {
 	cd "$srcdir/${pkgname%-git}"
 	git submodule init 
